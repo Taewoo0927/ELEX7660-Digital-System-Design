@@ -6,7 +6,6 @@ module decode2_tb ;
    logic [1:0] digit=0 ;
    logic [3:0] ct ;
 
-	// uut -> unit under test
    decode2 uut0 (.*) ;
    
    initial begin

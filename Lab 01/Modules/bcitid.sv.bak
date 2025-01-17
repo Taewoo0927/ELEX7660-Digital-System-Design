@@ -1,3 +1,0 @@
-module bcitid (input logic [1:0] digit, output logic [3:0] idnum);
-
-endmodule

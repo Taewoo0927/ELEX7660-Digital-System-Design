@@ -1,5 +1,15 @@
-module decode7 (input logic [3:0] num, output logic [7:0] leds) ;
-					
+// decode7.sv
+// Decription: The decode7 module converts any 4 bit number num (0, 1, 2, ...E, F) 
+//			   the signals necessary to control the 7-segment display.
+// author: Taewoo Kim
+// date: Jan 14, 2025
+
+
+module decode7 (input logic [3:0] num,  	// 4-bit input number
+				output logic [7:0] leds) ;  // 7-segment LED cathods
+
+		// use case statement to map the input number to the corresponding 
+		// 7-seg display			
 		always_comb begin
 			case(num)
 				4'h00 : leds = 8'h3F; 		// display 0

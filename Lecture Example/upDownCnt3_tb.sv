@@ -5,17 +5,22 @@
 
 logic upDown
 logic [2:0] count;
-logic clk;
+logic clk=0, reset_n=0;
 
 UpDownCnt3 dut(.*);
 
 initial begin
+    
+    // Apply active low reset for 100ms
+    reset_n = 0;
+    #100ms;
+    reset_n = 1;
 
-    // count up 5 times then down 5 times.
+    // count up 9 times then down 10 times.
     upDown = 1;
-    repeat (5) @(negedge clk);
+    repeat (9) @(negedge clk);
     upDown = 0;
-    repeat (5) @(negedge clk);
+    repeat (10) @(negedge clk);
 
     $stop
 end

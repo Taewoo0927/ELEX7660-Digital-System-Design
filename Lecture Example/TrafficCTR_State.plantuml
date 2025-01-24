@@ -1,0 +1,12 @@
+@startuml TrafficState
+
+state "<b>RG" as RG
+state "<b>RY" as RY
+state "<b>GR" as GR
+state "<b>YR" as YR
+
+
+
+
+
+@enduml

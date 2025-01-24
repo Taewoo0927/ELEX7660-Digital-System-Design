@@ -5,7 +5,7 @@
 
 module UpDownCnt3 (input logic upDown,
                    output logic [2:0] count,
-                   input logic clk );
+                   input logic clk, reset_n );
 
     logic [2:0] nextCount;
 
@@ -18,7 +18,9 @@ module UpDownCnt3 (input logic upDown,
     end
 
     // Clock to store nextCount to count
-    always_ff @( posedge clk ) begin
+    always_ff @( posedge clk, negedge reset_n ) begin
+        if (~reset_n)
+            count <= 0;
         count <= nextCount;
     end
     

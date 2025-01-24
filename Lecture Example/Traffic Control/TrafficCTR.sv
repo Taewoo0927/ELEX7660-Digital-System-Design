@@ -18,11 +18,11 @@ module trafficlight(
     }state_transition_s;
 
     // Lookup table for the state transition
-    state_transition_s state_transition_lut [4] = `{
-        `{`RY, `YELLOW_DELAY - 1}, // RG -> RY
-        `{`GR, `GREEN_DELAY - 1},  // RY -> GR
-        `{`YR, `YELLOW_DELAY - 1}, // GR -> YR
-        `{`RG, `GREEN_DELAY - 1}   // YR -> RG
+    state_transition_s state_transition_lut [4] = '{
+        '{`RY, `YELLOW_DELAY - 1}, // RG -> RY
+        '{`GR, `GREEN_DELAY - 1},  // RY -> GR
+        '{`YR, `YELLOW_DELAY - 1}, // GR -> YR
+        '{`RG, `GREEN_DELAY - 1}   // YR -> RG
     };
 
     // light outpus struct
@@ -33,11 +33,11 @@ module trafficlight(
     } light_outputs_t;
 
     // Define the lookup table for each state
-    light_outputs_t state_lut [4] = `{
-        `{1, 0, 0, 0, 0, 1}, // RG: r1=1, g2=1
-        `{1, 0, 0, 1, 0, 0}, // RY: r1=1, y2=1
-        `{0, 1, 0, 0, 1, 0}, // GR: g1=1, r2=1
-        `{0, 1, 1, 0, 0, 0}  // YR: y1=1, r2=1
+    light_outputs_t state_lut [4] = '{
+        '{1, 0, 0, 0, 0, 1}, // RG: r1=1, g2=1
+        '{1, 0, 0, 1, 0, 0}, // RY: r1=1, y2=1
+        '{0, 1, 0, 0, 1, 0}, // GR: g1=1, r2=1
+        '{0, 1, 1, 0, 0, 0}  // YR: y1=1, r2=1
     };
 
     // Traffic light control states & counter

@@ -1,0 +1,31 @@
+' Remain green for 30 seconds, and will change to
+' yellow for 5 seconds before going to red.
+' Clock is 1Hz
+
+@startuml TrafficState
+
+' Set direction to horizontal
+left to right direction
+state "<b>RG" as RG : <i>Green & Red
+state "<b>RY" as RY : <i>Red & Yellow
+state "<b>GR" as GR : <i>Green & Red
+state "<b>YR" as YR : <i>Yellow & Red
+
+RG --> RY
+RY --> GR
+GR --> YR
+YR --> RG
+
+' Green 30 seconds
+RG --> RG : 20 Cycles
+' Yellow 5 seconds
+RY --> RY : 3 Cycles
+' Green 30 seconds
+GR --> GR : 20 Cycles
+' Yellow 5 seconds
+YR --> YR : 3 Cycles   
+
+
+
+
+@enduml

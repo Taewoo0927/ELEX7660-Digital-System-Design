@@ -17,13 +17,13 @@ GR --> YR
 YR --> RG
 
 ' Green 30 seconds
-RG --> RG : 20 Cycles
+RG --> RG : 30 Cycles
 ' Yellow 5 seconds
-RY --> RY : 3 Cycles
+RY --> RY : 5 Cycles
 ' Green 30 seconds
-GR --> GR : 20 Cycles
-' Yellow 5 seconds
-YR --> YR : 3 Cycles   
+GR --> GR : 30 Cycles
+' Yellow 5 seconds // assuming 1 cycle per second -> 1 Hz 
+YR --> YR : 5 Cycles   
 
 
 

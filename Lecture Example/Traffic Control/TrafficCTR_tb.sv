@@ -1,16 +1,15 @@
-// trafficLight_tb.sv 
+// trafficlight_tb.sv 
 // testbench to test traffic light lecture example code 
 // date: Jan 12, 2024S 
 // author: Robert Trost 
 
-module trafficLight_tb ; 
+module trafficlight_tb ; 
 
 logic clk = 0, reset_n = 0; // clock and active low reset 
 logic r1, y1, g1, r2, y2, g2; // outputs to observe 
-trafficLight dut (.*) ; // device under test 
+trafficlight dut (.*) ; // device under test 
 
-initial begin 
-    
+initial begin     
     // hold reset for two clock cycles 
     reset_n = 0;
     repeat(2) @(negedge clk); 

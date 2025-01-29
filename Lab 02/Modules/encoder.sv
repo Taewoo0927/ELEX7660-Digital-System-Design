@@ -11,15 +11,15 @@ module encoder( input logic a, b, clk,
     logic cw_next, ccw_next;
 
     /* Prev a, a, Prev b, b
-            0, 1,      0, 0 : CCW
-            1, 1,      0, 1 : CCW
-            1, 0,      1, 1 : CCW
-            0, 0,      1, 0 : CCW
+            0, 1,      0, 0 : CW
+            1, 1,      0, 1 : CW
+            1, 0,      1, 1 : CW
+            0, 0,      1, 0 : CW
 
-            0, 0,      0, 1 : CW
-            0, 1,      1, 1 : CW
-            1, 1,      1, 0 : CW
-            1, 0,      0, 0 : CW  */ 
+            0, 0,      0, 1 : CCW
+            0, 1,      1, 1 : CCW
+            1, 1,      1, 0 : CCW
+            1, 0,      0, 0 : CCW  */ 
     always_comb begin
         case ({prev_a, a, prev_b, b})
             4'b0010, 4'b1011, 4'b1101, 4'b0100: cw_next = 1'b1; // CW

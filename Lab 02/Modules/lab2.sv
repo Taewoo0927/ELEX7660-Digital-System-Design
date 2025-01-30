@@ -23,8 +23,8 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
    // simple 4x4 look up table 3:0 to store 4 different logic and
    // 3:0 to store each counts inside the element
    logic encoder_lut [3:0][3:0] = '{
-      enc2_counts[3:0], // if digit is 0
-      enc2_counts[7:4], // if digit is 1
+      enc2_count[3:0], // if digit is 0
+      enc2_count[7:4], // if digit is 1
       enc1_count[3:0],  // if digit is 2
       enc1_count[7:4]  // if digit is 3
    };

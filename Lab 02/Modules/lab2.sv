@@ -2,7 +2,7 @@
 // Description: ELEX 7660 lab1 top-level module.  Displays last
 //              four digits of student number of 4 digit 7-segment
 //              display module.
-// Author: Robert Trost 
+// Author: Robert Trost, Taewoo Kim
 // Date: 2024-01-11
 
 module lab2 ( input logic CLOCK_50,       // 50 MHz clock
@@ -19,6 +19,15 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
 
    logic [7:0] enc1_count, enc2_count; // count used to track encoder movement and to display
    logic enc1_cw, enc1_ccw, enc2_cw, enc2_ccw;  // encoder module outputs
+
+   // simple 4x4 look up table 3:0 to store 4 different logic and
+   // 3:0 to store each counts inside the element
+   logic encoder_lut [3:0][3:0] = '{
+      enc2_counts[3:0], // if digit is 0
+      enc2_counts[7:4], // if digit is 1
+      enc1_count[3:0],  // if digit is 2
+      enc1_count[7:4]  // if digit is 3
+   };
 
    // instantiate modules to implement design
    decode2 decode2_0 (.digit,.ct) ;
@@ -49,9 +58,8 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
   // Select digit to display (disp_digit)
   // Left two digits (3,2) display encoder 1 hex count and right two digits (1,0) display encoder 2 hex count
   always_comb begin
-  
-  *** ADD CODE HERE ****
-  
+      // according to enc1_counts or enc2_counts value set disp_digit accordingly to set the leds
+      disp_digit = encoder_lut[digit];
   end  
 
 endmodule

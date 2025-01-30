@@ -10,8 +10,8 @@ module encoder( input logic a, b, clk, // input: swithc a, b and clk
     logic prev_a = 0; 
     logic prev_b = 0;
     logic cw_next, ccw_next;
-    
-    // Patterns for rotary encoder
+
+    // Patterns that's been used for the rotary encoder
     /* Prev a, a, Prev b, b
             0, 1,      0, 0 : CW
             1, 1,      0, 1 : CW
@@ -39,10 +39,10 @@ module encoder( input logic a, b, clk, // input: swithc a, b and clk
 
     // In rising edge the clocks as desired outputs
     always_ff @( posedge clk ) begin
-        prev_a <= a; // save a value to prev_a
-        prev_b <= b; // save b value to prev_b
-        ccw <= ccw_next;
-        cw <= cw_next;        
+        prev_a <= a;        // save a value to prev_a
+        prev_b <= b;        // save b value to prev_b
+        ccw <= ccw_next;    // set ccw
+        cw <= cw_next;      // set cw
     end
 
 endmodule

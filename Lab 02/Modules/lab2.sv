@@ -2,7 +2,7 @@
 // Description: ELEX 7660 lab1 top-level module.  Displays last
 //              four digits of student number of 4 digit 7-segment
 //              display module.
-// Author: Robert Trost, Taewoo Kim
+// Author: Robert Trost
 // Date: 2024-01-11
 
 module lab2 ( input logic CLOCK_50,       // 50 MHz clock
@@ -20,15 +20,6 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
    logic [7:0] enc1_count, enc2_count; // count used to track encoder movement and to display
    logic enc1_cw, enc1_ccw, enc2_cw, enc2_ccw;  // encoder module outputs
 
-   // simple 4x4 look up table 3:0 to store 4 different logic and
-   // 3:0 to store each counts inside the element
-   logic encoder_lut [3:0][3:0] = '{
-      enc2_count[3:0], // if digit is 0
-      enc2_count[7:4], // if digit is 1
-      enc1_count[3:0],  // if digit is 2
-      enc1_count[7:4]  // if digit is 3
-   };
-
    // instantiate modules to implement design
    decode2 decode2_0 (.digit,.ct) ;
    decode7 decode7_0 (.num(disp_digit),.leds) ;
@@ -36,18 +27,9 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
    encoder encoder_1 (.clk(CLOCK_50), .a(enc1_a), .b(enc1_b), .cw(enc1_cw), .ccw(enc1_ccw));
    encoder encoder_2 (.clk(CLOCK_50), .a(enc2_a), .b(enc2_b), .cw(enc2_cw), .ccw(enc2_ccw));
 
-  // encoder counts: enc1_count & enc2_count (increment when cw=1, decrement when ccw=1)
-  always_ff @(posedge CLOCK_50)  begin
-    
-    // encoder 1 count
-    if (enc1_cw) enc1_count <= enc1_count + 1'b1;
-    else if (enc1_ccw) enc1_count <= enc1_count - 1'b1;
-
-    //encoder 2 count
-    if (enc2_cw) enc2_count <= enc2_count + 1'b1;
-    else if (enc2_ccw) enc2_count <= enc2_count - 1'b1;
-  end
-
+   enc2bcd enc2bcd_1 (.clk(CLOCK_50), .cw(enc1_cw), .ccw(enc1_ccw), .bcd_count(enc1_count));
+   enc2bcd enc2bcd_2 (.clk(CLOCK_50), .cw(enc2_cw), .ccw(enc2_ccw), .bcd_count(enc2_count));
+	
    // use count to divide clock and generate a 2 bit digit counter to determine which digit to display
    always_ff @(posedge CLOCK_50) 
      clk_div_count <= clk_div_count + 1'b1 ;
@@ -58,8 +40,14 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
   // Select digit to display (disp_digit)
   // Left two digits (3,2) display encoder 1 hex count and right two digits (1,0) display encoder 2 hex count
   always_comb begin
-      // according to enc1_counts or enc2_counts value set disp_digit accordingly to set the leds
-      disp_digit = encoder_lut[digit];
+      // according to enc1_counts or enc2_counts value set disp_digit accordingly to set the leds 
+		 case (digit)
+			  2'b00: disp_digit = enc2_count[3:0]; // if digit is 0
+			  2'b01: disp_digit = enc2_count[7:4]; // if digit is 1
+			  2'b10: disp_digit = enc1_count[3:0]; // if digit is 2
+			  2'b11: disp_digit = enc1_count[7:4]; // if digit is 3
+			  default: disp_digit = 4'b0000;       // Default or error value
+		 endcase		
   end  
 
 endmodule

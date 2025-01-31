@@ -25,15 +25,12 @@ module encoder( input logic a, b, clk, // input: swithc a, b and clk
     
     // Using the above patterns implement the conditions with case statement
     always_comb begin
+	    // Initialize outputs to default values
+		 cw_next  = 1'b0;
+		 ccw_next = 1'b0;
         case ({prev_a, a, prev_b, b})
             4'b0010, 4'b1011, 4'b1101, 4'b0100: cw_next = 1'b1; // CW
             4'b0001, 4'b0111, 4'b1110, 4'b1000: ccw_next  = 1'b1; // CCW
-            
-            // assign cw_next & ccw_next default as 0 so it only pulse for one cycle
-            default: begin
-                cw_next  = 1'b0; 
-                ccw_next = 1'b0;
-            end
         endcase
     end
 

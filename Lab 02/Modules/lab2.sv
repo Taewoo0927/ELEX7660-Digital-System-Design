@@ -19,10 +19,16 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
 
    logic [7:0] enc1_count, enc2_count; // count used to track encoder movement and to display
    logic enc1_cw, enc1_ccw, enc2_cw, enc2_ccw;  // encoder module outputs
+   logic enc1_a_db, enc1_b_db, enc2_a_db, enc2_b_db;
 
    // instantiate modules to implement design
    decode2 decode2_0 (.digit,.ct) ;
    decode7 decode7_0 (.num(disp_digit),.leds) ;
+
+   debounce encoder_db_1_a ( .clk(CLOCK_50), .noisy_sig(enc1_a), stable_sig(enc1_a_db));
+   debounce encoder_db_1_b ( .clk(CLOCK_50), .noisy_sig(enc1_b), stable_sig(enc1_b_db));
+   debounce encoder_db_2_a ( .clk(CLOCK_50), .noisy_sig(enc2_a), stable_sig(enc2_a_db));
+   debounce encoder_db_2_b ( .clk(CLOCK_50), .noisy_sig(enc2_b), stable_sig(enc2_b_db));
 
    encoder encoder_1 (.clk(CLOCK_50), .a(enc1_a), .b(enc1_b), .cw(enc1_cw), .ccw(enc1_ccw));
    encoder encoder_2 (.clk(CLOCK_50), .a(enc2_a), .b(enc2_b), .cw(enc2_cw), .ccw(enc2_ccw));

@@ -4,28 +4,49 @@
 // author: Taewoo Kim
 // date: Jan 26, 2025
 
-
 module enc2bcd (input logic clk, cw, ccw, output logic [7:0] bcd_count);
 
-    // initalize the logic count
-    logic [2:0] count = 0;
+	// Count until 3
+	localparam PULSE_COUNTER = 2'b11;	
+    // initalize the logic count (0~3 and wrap back)
+    logic [1:0] state_count = 0;
 
     // encoder counts: (increment when cw=1, decrement when ccw=1)
     always_ff @(posedge clk)  begin
 
-		  // To do: Need to reset to 0 if it reaches 9.
-		  // Which means 3:0 reach 9 -> 0 but 
-        // encoder count starts once count reach 4 and wrap back to 0
-		  if (cw) begin
-		    count ++;
-			 if (count >= 4) begin
-				bcd_count <= bcd_count + 1'b1; // cw: count up
-			 end
-		  end else if (ccw) begin
-		    count ++;
-			 if (count >= 4) bcd_count <= bcd_count - 1'b1; // ccw: count down
-		  end else bcd_count <= bcd_count;
-		  
+		// cw activated
+		if (cw) begin
+
+			// counted up to 3
+			if (state_count >= PULSE_COUNTER) begin
+
+				// check if first digit is 9
+				if(bcd_count[3:0] >= 4'h09) begin
+					bcd_count[3:0] <= 4'h00;
+					bcd_count[7:4] <= (bcd_count[7:4] >= 4'h09) ? 4'h00 : bcd_count[7:4] + 1;
+				end
+				
+				bcd_count[3:0] <= bcd_count[3:0] + 1'b1; // cw: count up
+			end
+			state_count <= state_count + 1; // count the state
+		
+		// ccw activated
+		end else if (ccw) begin
+			if (state_count >= PULSE_COUNTER) begin
+
+				// if first digit is 0 than set to 9 (wrap back)
+				if(bcd_count[3:0] == 4'h00) begin	
+					bcd_count[3:0] <= 4'h09;
+					bcd_count[7:4] <= (bcd_count[7:4] == 4'h00) ? 4'h09 : bcd_count[7:4] - 1'b1;
+				end
+
+				bcd_count[3:0] <= bcd_count[3:0] - 1'b1; // ccw: count up
+			end 	
+			state_count <= state_count + 1; // count the state
+		
+		// nothing activated
+		end else bcd_count <= bcd_count;
+
     end
 
 endmodule

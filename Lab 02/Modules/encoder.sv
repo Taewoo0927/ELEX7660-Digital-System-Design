@@ -1,5 +1,6 @@
 // encoder.sv
-// This is simple module to control encoder
+// Description: This is simple module to control encoder
+//              by checking the states in a pulse.
 // author: Taewoo Kim
 // date: Jan 26, 2025
 
@@ -28,13 +29,14 @@ module encoder( input logic a, b, clk, // input: swithc a, b and clk
 	    // Initialize outputs to default values
 		 cw_next  = 1'b0;
 		 ccw_next = 1'b0;
+         // Check the pattern
         case ({prev_a, a, prev_b, b})
-            4'b0010, 4'b1011, 4'b1101, 4'b0100: cw_next = 1'b1; // CW
-            4'b0001, 4'b0111, 4'b1110, 4'b1000: ccw_next  = 1'b1; // CCW
+            4'b0010, 4'b1011, 4'b1101, 4'b0100: cw_next = 1'b1; // states for the CW
+            4'b0001, 4'b0111, 4'b1110, 4'b1000: ccw_next  = 1'b1; // states for the CCW
         endcase
     end
 
-    // In rising edge the clocks as desired outputs
+    // In rising edge the set desired outputs
     always_ff @( posedge clk ) begin
         prev_a <= a;        // save a value to prev_a
         prev_b <= b;        // save b value to prev_b

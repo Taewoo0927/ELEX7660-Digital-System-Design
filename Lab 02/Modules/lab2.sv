@@ -1,9 +1,10 @@
-// File: lab1.sv
-// Description: ELEX 7660 lab1 top-level module.  Displays last
-//              four digits of student number of 4 digit 7-segment
+// File: lab2.sv
+// Description: ELEX 7660 lab2 top-level module.  Counts up the
+//              digits of decimal number 00~99 on each side of encoder of 4 digit 7-segment
 //              display module.
 // Author: Robert Trost
-// Date: 2024-01-11
+// Updated by: Taewoo Kim
+// Date: 2025-02-02
 
 module lab2 ( input logic CLOCK_50,       // 50 MHz clock
               (* altera_attribute = "-name WEAK_PULL_UP_RESISTOR ON" *) 
@@ -24,10 +25,10 @@ module lab2 ( input logic CLOCK_50,       // 50 MHz clock
    // instantiate modules to implement design
    decode2 decode2_0 (.digit,.ct) ;
    decode7 decode7_0 (.num(disp_digit),.leds) ;
-
+  // instantiate encoders
    encoder encoder_1 (.clk(CLOCK_50), .a(enc1_a), .b(enc1_b), .cw(enc1_cw), .ccw(enc1_ccw));
    encoder encoder_2 (.clk(CLOCK_50), .a(enc2_a), .b(enc2_b), .cw(enc2_cw), .ccw(enc2_ccw));
-
+  // instantiate encoder to bcd
    enc2bcd enc2bcd_1 (.clk(CLOCK_50), .cw(enc1_cw), .ccw(enc1_ccw), .bcd_count(enc1_count));
    enc2bcd enc2bcd_2 (.clk(CLOCK_50), .cw(enc2_cw), .ccw(enc2_ccw), .bcd_count(enc2_count));
 	

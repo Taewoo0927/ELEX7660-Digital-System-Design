@@ -1,0 +1,16 @@
+' Statemachine.plantuml
+' This is a simple state machine to represent
+' the rotary encoder.
+' author: Taewoo Kim
+' date: Jan 28, 2025
+
+@startuml statemachine
+
+left to right direction
+state "<b>CW" as cw
+state "<b>CCW" as ccw
+
+cw --> ccw : 4'b0010 || 4'b1011 || 4'b1101 || 4'b0100
+ccw --> cw : 4'b0001 || 4'b0111 || 4'b1110 || 4'b1000
+
+@enduml

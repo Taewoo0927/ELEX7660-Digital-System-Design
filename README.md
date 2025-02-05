@@ -7,3 +7,5 @@ Before we inmplement to the FPGA board, we will be simulating the code using Mod
 
 ## Lab 02
 The purpose of this lab is to implement a simple finite state machine and read input from a rotary encoder. 
+Left Rotary encoder controls the first two digits of 7-segement ranging from 00 to 99 as well as right side
+controls the last two digits from 00 to 99.

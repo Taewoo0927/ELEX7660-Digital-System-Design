@@ -1,0 +1,14 @@
+' Switch_waveform.plantuml
+' This is simple waveform to represent switch A and B
+' in the rotary encoder
+' author: Taewoo Kim
+' date: Jan 26, 2025
+
+@startuml waveform
+
+clock "Switch A"  as A with period 4 offset 2
+clock "Switch B"  as B with period 4 offset 3
+@10
+
+@enduml
+
